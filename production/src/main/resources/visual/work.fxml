@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="1035.0" style="-fx-background-color: #87CEFA;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.WorkController">
+    <children>
+        <Button fx:id="help" layoutX="8.0" layoutY="51.0" mnemonicParsing="false" style="-fx-background-color: #00FFFF;" text="help" />
+        <Button fx:id="show" layoutX="64.0" layoutY="51.0" mnemonicParsing="false" style="-fx-background-color: #00FFFF;" text="show" />
+        <Button fx:id="info" layoutX="158.0" layoutY="233.0" mnemonicParsing="false" style="-fx-background-color: #00FFFF;" text="info" />
+        <Button fx:id="add" layoutX="8.0" layoutY="87.0" mnemonicParsing="false" style="-fx-background-color: #00FFFF;" text="add" />
+        <Button fx:id="update" layoutX="59.0" layoutY="87.0" mnemonicParsing="false" style="-fx-background-color: #00FFFF;" text="update" />
+        <Button fx:id="remove_by_id" layoutX="107.0" layoutY="164.0" mnemonicParsing="false" style="-fx-background-color: #00FFFF;" text="remove_by_id" />
+        <Button fx:id="clear" layoutX="8.0" layoutY="126.0" mnemonicParsing="false" style="-fx-background-color: #00FFFF;" text="clear" />
+        <Button fx:id="head" layoutX="64.0" layoutY="126.0" mnemonicParsing="false" style="-fx-background-color: #00ffff;" text="head" />
+        <Button fx:id="remove_head" layoutX="114.0" layoutY="126.0" mnemonicParsing="false" style="-fx-background-color: #00FFFF;" text="remove_head" />
+        <Button fx:id="remove_lower" layoutX="5.0" layoutY="164.0" mnemonicParsing="false" style="-fx-background-color: #00FFFF;" text="remove_lower" />
+        <Button fx:id="remove_any_by_form_education" layoutX="6.0" layoutY="200.0" mnemonicParsing="false" style="-fx-background-color: #00FFFF;" text="remove_any_by_form_of_education" />
+        <Button fx:id="filter_strats_with_name" layoutX="6.0" layoutY="233.0" mnemonicParsing="false" style="-fx-background-color: #00FFFF;" text="filter_starts_with_name" />
+        <Button fx:id="filter_greater_than_students_count" layoutX="7.0" layoutY="271.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="201.0" style="-fx-background-color: #00FFFF;" text="filter_greater_than_students_count" />
+        <Button fx:id="exit" layoutX="8.0" layoutY="335.0" mnemonicParsing="false" style="-fx-background-color: #00FFFF;" text="exit" />
+        <TabPane layoutX="208.0" layoutY="1.0" prefHeight="400.0" prefWidth="829.0" tabClosingPolicy="UNAVAILABLE">
+            <tabs>
+                <Tab fx:id="table_tab" text="Таблица">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                            <children>
+                                <TableView fx:id="table" prefHeight="372.0" prefWidth="829.0">
+                                    <columns>
+                                        <TableColumn fx:id="id_column" prefWidth="62.6666259765625" text="id" />
+                                        <TableColumn fx:id="name_column" prefWidth="62.6666259765625" text="name" />
+                                        <TableColumn fx:id="count_column" prefWidth="62.6666259765625" text="count" />
+                                        <TableColumn fx:id="exp_column" prefWidth="62.6666259765625" text="exp" />
+                                        <TableColumn fx:id="form_column" prefWidth="62.6666259765625" text="form" />
+                                        <TableColumn fx:id="semester_column" prefWidth="62.6666259765625" text="semester" />
+                                        <TableColumn fx:id="admin_name_column" prefWidth="79.33331298828125" text="admin_name" />
+                                        <TableColumn fx:id="height_column" minWidth="1.33331298828125" prefWidth="62.6666259765625" text="height" />
+                                        <TableColumn fx:id="weight_column" prefWidth="62.6666259765625" text="weight" />
+                                        <TableColumn fx:id="eye_color_column" prefWidth="62.6666259765625" text="eye_color" />
+                                        <TableColumn minWidth="0.0" prefWidth="62.6666259765625" text="x" fx:id="x_column" />
+                                        <TableColumn fx:id="y_column" minWidth="0.0" prefWidth="62.6666259765625" text="y" />
+                                        <TableColumn fx:id="login_column" minWidth="0.0" prefWidth="62.6666259765625" text="login" />
+                                    </columns>
+                                </TableView>
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </Tab>
+                <Tab fx:id="graphics_tab" text="Графическое представление">
+                    <content>
+                        <Canvas fx:id="canvas" height="350.0" width="770.0" />
+                    </content>
+                </Tab>
+            </tabs>
+        </TabPane>
+        <Label fx:id="UserLabel" layoutX="15.0" layoutY="14.0" prefHeight="17.0" prefWidth="75.0" />
+        <Rectangle fx:id="ColorRect" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="25.0" layoutX="92.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="29.0" />
+    </children>
+</AnchorPane>
