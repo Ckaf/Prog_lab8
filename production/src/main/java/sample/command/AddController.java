@@ -12,6 +12,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import sample.Main;
 import sample.tools.ErorAlert;
 
 import java.io.IOException;
@@ -82,7 +83,7 @@ public class AddController {
                 information.isUpdate=true;
                 client.run(information);
             } catch (Exception er) {
-                ErorAlert.alert("Неправильно заполнены поля");
+                ErorAlert.alert(Main.bundle.getString("error_field"));
             }
 
         });

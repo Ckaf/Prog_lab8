@@ -47,7 +47,7 @@ public class Synchronization {
         try {
             datagramSocket = new DatagramSocket(generateAddress());
         } catch (SocketException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
     }
     public static void handling(byte[] buffer, TableView<Students> table) throws IOException, ClassNotFoundException {

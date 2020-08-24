@@ -11,6 +11,6 @@
     <TextField fx:id="count" layoutX="155.0" layoutY="10.0" prefHeight="26.0" prefWidth="103.0" />
 
 
-    <Button fx:id="ShowButton" layoutX="127.0" layoutY="95.0" mnemonicParsing="false" text="show" />
+    <Button fx:id="ShowButton" layoutX="127.0" layoutY="95.0" mnemonicParsing="false" text="%show" />
     <Label fx:id="ShowLabel" layoutX="115.0" layoutY="68.0" prefHeight="17.0" prefWidth="70.0" />
 </AnchorPane>

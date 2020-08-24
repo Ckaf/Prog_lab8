@@ -8,10 +8,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TableView;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 
+import java.io.File;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
@@ -129,9 +131,15 @@ public class SendCommand {
         information.pass = password;
         client.run(information,ColorRect);
     }
+    public static void execute(Stage stage){
+        FileChooser fileChooser=new FileChooser();
+        File file=fileChooser.showOpenDialog(stage);
+        if (file!=null){
 
+        }
+    }
     public static void show(String path) {
-        FXMLLoader fxmlLoader = new FXMLLoader(SendCommand.class.getResource(path));
+        FXMLLoader fxmlLoader = new FXMLLoader(SendCommand.class.getResource(path),Main.bundle);
         Parent root1 = null;
         try {
             root1 = (Parent) fxmlLoader.load();

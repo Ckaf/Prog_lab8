@@ -8,12 +8,13 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
+
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="700.0" style="-fx-background-color: #87CEFA;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
    <children>
-      <TextField fx:id="login_field" cache="true" layoutX="275.0" layoutY="200.0" promptText="Логин" style="-fx-background-color: #fafafa;" />
-      <PasswordField fx:id="pass_field" layoutX="274.0" layoutY="234.0" promptText="Пароль" style="-fx-background-color: #fafafa;" />
-      <Button fx:id="entrance" layoutX="324.0" layoutY="280.0" mnemonicParsing="false" style="-fx-background-color: #00FFFF;" text="Войти" />
-      <Button fx:id="registration" layoutX="285.0" layoutY="318.0" mnemonicParsing="false" style="-fx-background-color: #00FFFF;" text="Зарегестрироваться" />
+      <TextField fx:id="login_field" cache="true" layoutX="275.0" layoutY="200.0" promptText="%login" style="-fx-background-color: #fafafa;" />
+      <PasswordField fx:id="pass_field" layoutX="274.0" layoutY="234.0" promptText="%pass" style="-fx-background-color: #fafafa;" />
+      <Button fx:id="entrance" layoutX="324.0" layoutY="280.0" mnemonicParsing="false" style="-fx-background-color: #00FFFF;" text="%enter" />
+      <Button fx:id="registration" layoutX="285.0" layoutY="318.0" mnemonicParsing="false" style="-fx-background-color: #00FFFF;" text="%registration" />
       <ImageView fitHeight="168.0" fitWidth="174.0" layoutX="261.0" layoutY="14.0">
 <!--         <Image url="@../../../../../мем.jpg" />-->
       </ImageView>

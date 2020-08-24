@@ -4,6 +4,9 @@ import Cllient.Students;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
@@ -12,10 +15,14 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldListCell;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.Stage;
 import sample.tools.ErorAlert;
 
 import java.awt.*;
+import java.io.IOException;
 import java.util.LinkedList;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import static sample.Paint.CheckFigure;
 import static sample.SendCommand.*;
@@ -118,7 +125,38 @@ public class WorkController {
     private TableColumn<Students, String> login_column;
 
     @FXML
+    public ChoiceBox<String> langBox;
+    @FXML
+    private Button execute;
+    @FXML
     void initialize() {
+        final ResourceBundle[] bundle = {Main.bundle};
+        ObservableList<String> lang = FXCollections.observableArrayList(bundle[0].getString("rus_lang"), bundle[0].getString("rs_lang"), bundle[0].getString("al_lang"), bundle[0].getString("es_lang"));
+        if(bundle[0].getLocale().toString().equals("ru"))langBox.setValue(bundle[0].getString("rus_lang"));
+        if(bundle[0].getLocale().toString().equals("rs"))langBox.setValue(bundle[0].getString("rs_lang"));
+        if(bundle[0].getLocale().toString().equals("al"))langBox.setValue(bundle[0].getString("al_lang"));
+        if(bundle[0].getLocale().toString().equals("es"))langBox.setValue(bundle[0].getString("es_lang"));
+        langBox.setItems(lang);
+        langBox.setOnAction(event -> {
+            if (langBox.getValue().equals(bundle[0].getString("rus_lang"))) bundle[0] =(ResourceBundle.getBundle("locals", Locale.forLanguageTag("RU"), new UTF8Control()));
+            if (langBox.getValue().equals(bundle[0].getString("rs_lang"))) bundle[0] =(ResourceBundle.getBundle("locals", Locale.forLanguageTag("RS"), new UTF8Control()));
+            if (langBox.getValue().equals(bundle[0].getString("al_lang"))) bundle[0] =(ResourceBundle.getBundle("locals", Locale.forLanguageTag("AL"), new UTF8Control()));
+            if (langBox.getValue().equals(bundle[0].getString("es_lang"))) bundle[0] =(ResourceBundle.getBundle("locals", Locale.forLanguageTag("ES"), new UTF8Control()));
+            Stage mainStage = (Stage) ColorRect.getScene().getWindow();
+            Main.bundle=bundle[0];
+            Parent root = null;
+            try {
+                root = FXMLLoader.load(getClass().getResource("/visual/work.fxml"),bundle[0]);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            Scene scene=new Scene(root, 1035, 400);
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.show();
+            mainStage.close();
+        });
+
         UserLabel.setText(login);
         Runnable task = () -> {
             Synchronization.synchronization(table);
@@ -180,6 +218,10 @@ public class WorkController {
         });
         table.setEditable(true);
         EditTable();
+
+        execute.setOnAction(event -> {
+
+        });
     }
 
 
@@ -238,37 +280,59 @@ public class WorkController {
         y_column.setCellFactory(TextFieldTableCell.forTableColumn());
 
         name_column.setOnEditCommit(commit -> {
-            SendUpdate(commit.getTableView().getItems().get(commit.getTablePosition().getRow()));
+            Students students=commit.getTableView().getItems().get(commit.getTablePosition().getRow());
+            students.setName(commit.getNewValue());
+            SendUpdate(students);
         });
         count_column.setOnEditCommit(commit -> {
-            SendUpdate(commit.getTableView().getItems().get(commit.getTablePosition().getRow()));
+            Students students=commit.getTableView().getItems().get(commit.getTablePosition().getRow());
+            students.setCount(commit.getNewValue());
+            SendUpdate(students);
         });
         exp_column.setOnEditCommit(commit -> {
-            SendUpdate(commit.getTableView().getItems().get(commit.getTablePosition().getRow()));
+            Students students=commit.getTableView().getItems().get(commit.getTablePosition().getRow());
+            students.setExp(commit.getNewValue());
+            SendUpdate(students);
         });
         form_column.setOnEditCommit(commit -> {
-            SendUpdate(commit.getTableView().getItems().get(commit.getTablePosition().getRow()));
+            Students students=commit.getTableView().getItems().get(commit.getTablePosition().getRow());
+            students.setForm(commit.getNewValue());
+            SendUpdate(students);
         });
         semester_column.setOnEditCommit(commit -> {
-            SendUpdate(commit.getTableView().getItems().get(commit.getTablePosition().getRow()));
+            Students students=commit.getTableView().getItems().get(commit.getTablePosition().getRow());
+            students.setSemester(commit.getNewValue());
+            SendUpdate(students);
         });
         admin_name_column.setOnEditCommit(commit -> {
-            SendUpdate(commit.getTableView().getItems().get(commit.getTablePosition().getRow()));
+            Students students=commit.getTableView().getItems().get(commit.getTablePosition().getRow());
+            students.setAdmin_name(commit.getNewValue());
+            SendUpdate(students);
         });
         height_column.setOnEditCommit(commit -> {
-            SendUpdate(commit.getTableView().getItems().get(commit.getTablePosition().getRow()));
+            Students students=commit.getTableView().getItems().get(commit.getTablePosition().getRow());
+            students.setHeight(commit.getNewValue());
+            SendUpdate(students);
         });
         weight_column.setOnEditCommit(commit -> {
-            SendUpdate(commit.getTableView().getItems().get(commit.getTablePosition().getRow()));
+            Students students=commit.getTableView().getItems().get(commit.getTablePosition().getRow());
+            students.setWeight(commit.getNewValue());
+            SendUpdate(students);
         });
         eye_color_column.setOnEditCommit(commit -> {
-            SendUpdate(commit.getTableView().getItems().get(commit.getTablePosition().getRow()));
+            Students students=commit.getTableView().getItems().get(commit.getTablePosition().getRow());
+            students.setEyeColor(commit.getNewValue());
+            SendUpdate(students);
         });
         x_column.setOnEditCommit(commit -> {
-            SendUpdate(commit.getTableView().getItems().get(commit.getTablePosition().getRow()));
+            Students students=commit.getTableView().getItems().get(commit.getTablePosition().getRow());
+            students.setX(commit.getNewValue());
+            SendUpdate(students);
         });
         y_column.setOnEditCommit(commit -> {
-            SendUpdate(commit.getTableView().getItems().get(commit.getTablePosition().getRow()));
+            Students students=commit.getTableView().getItems().get(commit.getTablePosition().getRow());
+            students.setY(commit.getNewValue());
+            SendUpdate(students);
         });
     }
 
@@ -291,19 +355,20 @@ public class WorkController {
             }
         } catch (Exception er) {
             er.printStackTrace();
-            ErorAlert.alert("Неправильно заполнены поля");
+            ErorAlert.alert(Main.bundle.getString("error_field"));
         }
+        SendCommand.show(table);
     }
     public boolean CheckForm(Students students){
         if (!students.getForm().equals("DISTANCE_EDUCATION")&& !students.getForm().equals("FULL_TIME_EDUCATION")&&!students.getForm().equals("EVENING_CLASSES")) {
-            ErorAlert.alert("Неправильно заполнены поля формы обучения");
+            ErorAlert.alert(Main.bundle.getString("error_field_form"));
             return false;
         }
         else return true;
     }
     public boolean CheckEyeColor(Students students){
         if (!students.getEyeColor().equals("RED")&&!students.getEyeColor().equals("BLACK")&&!students.getEyeColor().equals("ORANGE")&&!students.getEyeColor().equals("BROWN")){
-            ErorAlert.alert("Неправильно заполнены поля цвета глаз");
+            ErorAlert.alert(Main.bundle.getString("error_field_eye"));
             return false;
         }
         else return true;
@@ -311,14 +376,14 @@ public class WorkController {
     public boolean CheckSemester(Students students){
         if(!students.getSemester().trim().equals("FIFTH")&& !students.getSemester().trim().equals("SIXTH")&& !students.getSemester().trim().equals("SEVENTH")&& !students.getSemester().trim().equals("EIGHTH")
                 && !students.getSemester().trim().equals("5")&& !students.getSemester().trim().equals("6")&& !students.getSemester().trim().equals("7")&& !students.getSemester().trim().equals("8")){
-            ErorAlert.alert("Неправильно заполнены поля семестра");
+            ErorAlert.alert(Main.bundle.getString("error_field_semester"));
             return false;
         }
         else return true;
     }
     public boolean CheckExp(Students students){
-        if (!students.getExp().equals("yes")&&!students.getExp().equals("отчислен")&&!students.getExp().equals("не отчислен")&&students.getExp().equals("yes")){
-            ErorAlert.alert("Неправильно заполнены поля");
+        if (!students.getExp().equals("yes")&&!students.getExp().equals(Main.bundle.getString("exp_y"))&&!students.getExp().equals(Main.bundle.getString("exp_n"))&&students.getExp().equals("yes")){
+            ErorAlert.alert(Main.bundle.getString("error_field"));
             return false;
         }
         else return true;

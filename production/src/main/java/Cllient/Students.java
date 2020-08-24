@@ -1,5 +1,7 @@
 package Cllient;
 
+import jdk.nashorn.internal.objects.annotations.Setter;
+
 public class Students {
      String id;
      String name;
@@ -87,5 +89,57 @@ public class Students {
 
     public String getY() {
         return y;
+    }
+
+    public void setAdmin_name(String admin_name) {
+        this.admin_name = admin_name;
+    }
+
+    public void setCount(String count) {
+        this.count = count;
+    }
+
+    public void setExp(String exp) {
+        this.exp = exp;
+    }
+
+    public void setEyeColor(String eyeColor) {
+        this.eyeColor = eyeColor;
+    }
+
+    public void setForm(String form) {
+        this.form = form;
+    }
+
+    public void setHeight(String height) {
+        this.height = height;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setSemester(String semester) {
+        this.semester = semester;
+    }
+
+    public void setUser(String user) {
+        User = user;
+    }
+
+    public void setUserColor(String userColor) {
+        UserColor = userColor;
+    }
+
+    public void setWeight(String weight) {
+        this.weight = weight;
+    }
+
+    public void setX(String x) {
+        this.x = x;
+    }
+
+    public void setY(String y) {
+        this.y = y;
     }
 }
