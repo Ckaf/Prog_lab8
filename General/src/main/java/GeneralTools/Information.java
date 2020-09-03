@@ -2,12 +2,14 @@ package GeneralTools;
 
 import java.io.Serializable;
 import java.net.InetSocketAddress;
+import java.util.Locale;
 
 /**
  * Class that stores information received from the client
  */
 public class Information implements Serializable {
     //transient
+    public Locale locale;
     private static final long serialVersionUID=34567890L;
     public InetSocketAddress address;
     public boolean isUpdate;

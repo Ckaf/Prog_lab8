@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import sample.Main;
 import sample.SendCommand;
 
 import static sample.SendCommand.*;
@@ -32,6 +33,7 @@ public class Remove {
                information.pass = password;
                information.idstr=id.getText();
                information.isUpdate=true;
+               information.locale= Main.bundle.getLocale();
                client.run(information);
            }
            catch (Exception e){

@@ -73,14 +73,14 @@ public class MessageHandling {
         }
         if (information.cmdtype.equalsIgnoreCase("help")) {
             Logger.login(Level.INFO, "Принимаем пакет с коммандой help");
-            AllCmd.help();
+            AllCmd.help(information);
         }
         if (information.cmdtype.equalsIgnoreCase("show")) {
-            AllCmd.show(StudyGroupPriorityQueue);
+            AllCmd.show(information);
             Logger.login(Level.INFO, "Принимаем пакет с коммандой show");
         }
         if (information.cmdtype.equalsIgnoreCase("info")) {
-            AllCmd.info(StudyGroupPriorityQueue);
+            AllCmd.info(StudyGroupPriorityQueue,information);
             Logger.login(Level.INFO, "Принимаем пакет с коммандой info");
         }
         if (information.cmdtype.equalsIgnoreCase("add")) {
@@ -100,7 +100,7 @@ public class MessageHandling {
             Logger.login(Level.INFO, "Принимаем пакет с коммандой clear");
         }
         if (information.cmdtype.equalsIgnoreCase("head")) {
-            AllCmd.head(StudyGroupPriorityQueue);
+            AllCmd.head(StudyGroupPriorityQueue,information);
             Logger.login(Level.INFO, "Принимаем пакет с коммандой head");
         }
         if (information.cmdtype.equalsIgnoreCase("remove_head")) {
@@ -108,7 +108,7 @@ public class MessageHandling {
             Logger.login(Level.INFO, "Принимаем пакет с коммандой remove_head");
         }
         if (information.cmdtype.equalsIgnoreCase("remove_lover")) {
-            AllCmd.remove_lover(information);
+            AllCmd.remove_lower(information);
             Logger.login(Level.INFO, "Принимаем пакет с коммандой remove_lower");
         }
         if (information.cmdtype.equalsIgnoreCase("remove_any_by_form_of_education")) {
@@ -116,11 +116,11 @@ public class MessageHandling {
             Logger.login(Level.INFO, "Принимаем пакет с коммандой remove_any_by_form_of_education");
         }
         if (information.cmdtype.equalsIgnoreCase("filter_starts_with_name")) {
-            AllCmd.filter_starts_with_name(StudyGroupPriorityQueue, information.name);
+            AllCmd.filter_starts_with_name(StudyGroupPriorityQueue, information.name,information);
             Logger.login(Level.INFO, "Принимаем пакет с коммандой filter_starts_with_name");
         }
         if (information.cmdtype.equalsIgnoreCase("filter_greater_than_students_count")) {
-            AllCmd.filter_greater_than_students_count(StudyGroupPriorityQueue, Long.parseLong(information.count));
+            AllCmd.filter_greater_than_students_count(StudyGroupPriorityQueue, Long.parseLong(information.count),information);
             Logger.login(Level.INFO, "Принимаем пакет с коммандой filter_greater_than_students_count");
         }
         if (information.cmdtype.equalsIgnoreCase("file")) {

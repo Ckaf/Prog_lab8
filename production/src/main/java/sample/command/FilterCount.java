@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import sample.Main;
 import sample.tools.ErorAlert;
 
 import static sample.SendCommand.*;
@@ -31,6 +32,7 @@ public class FilterCount {
             information.login = login;
             information.pass = password;
             information.count=count.getText();
+            information.locale= Main.bundle.getLocale();
             client.run(information);
         }
         catch (Exception e){

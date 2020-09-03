@@ -15,6 +15,7 @@ public class AnswerHandling {
                 MessageAlert.showMessage(answer.answer);
             }
             if (cmd.equalsIgnoreCase("info")) {
+                System.out.println(answer.answer);
                 MessageAlert.showMessage(answer.answer);
             }
 

@@ -1,6 +1,7 @@
 package sample;
 
 import Cllient.Client;
+import Cllient.ExecuteScript;
 import Cllient.Students;
 import GeneralTools.Information;
 import javafx.fxml.FXMLLoader;
@@ -11,6 +12,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import sample.tools.ExecuteAlert;
 
 
 import java.io.File;
@@ -38,6 +40,7 @@ public class SendCommand {
         information.login = log;
         information.pass = pass;
         information.address=generateAddress();
+        information.locale=Main.bundle.getLocale();
         client.run(information);
         password = pass;
         login = log;
@@ -49,6 +52,7 @@ public class SendCommand {
         information.address=generateAddress();
         information.login = log;
         information.pass = pass;
+        information.locale=Main.bundle.getLocale();
         client.run(information);
         password = pass;
         login = log;
@@ -58,6 +62,7 @@ public class SendCommand {
         information.cmdtype = "help";
         information.login = login;
         information.pass = password;
+        information.locale=Main.bundle.getLocale();
         client.run(information);
     }
 
@@ -65,6 +70,7 @@ public class SendCommand {
         information.cmdtype = "info";
         information.login = login;
         information.pass = password;
+        information.locale=Main.bundle.getLocale();
         client.run(information);
     }
 
@@ -72,6 +78,7 @@ public class SendCommand {
         information.cmdtype = "show";
         information.login = login;
         information.pass = password;
+        information.locale=Main.bundle.getLocale();
         client.run(information, table);
     }
 
@@ -91,6 +98,7 @@ public class SendCommand {
         information.cmdtype = "clear";
         information.login = login;
         information.pass = password;
+        information.locale=Main.bundle.getLocale();
         client.run(information);
     }
 
@@ -98,6 +106,7 @@ public class SendCommand {
         information.cmdtype = "head";
         information.login = login;
         information.pass = password;
+        information.locale=Main.bundle.getLocale();
         client.run(information);
     }
 
@@ -106,6 +115,7 @@ public class SendCommand {
         information.login = login;
         information.pass = password;
         information.isUpdate=true;
+        information.locale=Main.bundle.getLocale();
         client.run(information);
     }
 
@@ -131,12 +141,15 @@ public class SendCommand {
         information.pass = password;
         client.run(information,ColorRect);
     }
-    public static void execute(Stage stage){
+    public static void execute(Stage stage,TableView<Students> table) throws IOException, ClassNotFoundException {
         FileChooser fileChooser=new FileChooser();
         File file=fileChooser.showOpenDialog(stage);
         if (file!=null){
-
+            ExecuteScript.execute(file.getPath(),login,password,table);
         }
+    }
+    public static void execute_1(Stage stage,TableView<Students> table) throws IOException, ClassNotFoundException {
+        show("/visual/execute.fxml");
     }
     public static void show(String path) {
         FXMLLoader fxmlLoader = new FXMLLoader(SendCommand.class.getResource(path),Main.bundle);
@@ -150,7 +163,7 @@ public class SendCommand {
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setTitle("Lab 8");
         stage.setScene(new Scene(root1));
-        stage.show();
+        stage.showAndWait();
     }
 
     public static InetSocketAddress generateAddress(){

@@ -6,6 +6,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import sample.Main;
 
 import static sample.SendCommand.*;
 
@@ -27,6 +28,7 @@ public class RemoveForm {
             information.login = login;
             information.pass = password;
             information.form=form.getValue();
+            information.locale= Main.bundle.getLocale();
             information.isUpdate=true;
             client.run(information);
         });

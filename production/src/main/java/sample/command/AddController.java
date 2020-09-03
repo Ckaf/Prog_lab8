@@ -81,6 +81,7 @@ public class AddController {
                 information.login = login;
                 information.pass = password;
                 information.isUpdate=true;
+                information.locale=Main.bundle.getLocale();
                 client.run(information);
             } catch (Exception er) {
                 ErorAlert.alert(Main.bundle.getString("error_field"));

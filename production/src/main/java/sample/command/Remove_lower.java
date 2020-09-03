@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import sample.Main;
 
 import static sample.SendCommand.*;
 
@@ -29,6 +30,7 @@ public class Remove_lower {
                 information.login = login;
                 information.pass = password;
                 information.idstr=id.getText();
+                information.locale= Main.bundle.getLocale();
                 information.isUpdate=true;
                 client.run(information);
             }

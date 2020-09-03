@@ -883,7 +883,7 @@ public class MainC {
                                                                                 String answer = scanner.nextLine();
                                                                                 answer.trim();
                                                                                 if (answer.equalsIgnoreCase("yes") == true) {
-                                                                                    ExecuteScript.execute(file_name);
+                                                                               //     ExecuteScript.execute(file_name,table);
                                                                                     break;
                                                                                 } else {
                                                                                     if (answer.equalsIgnoreCase("no") == true) {

@@ -1,6 +1,7 @@
 package sample;
 
 import Cllient.Students;
+import GeneralTools.UTF8Control;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -12,13 +13,11 @@ import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.cell.TextFieldListCell;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import sample.tools.ErorAlert;
 
-import java.awt.*;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Locale;
@@ -220,7 +219,13 @@ public class WorkController {
         EditTable();
 
         execute.setOnAction(event -> {
-
+            try {
+                SendCommand.execute(new Stage(),table);
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
         });
     }
 

@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
+import sample.Main;
 import sample.tools.ErorAlert;
 
 import static sample.command.AddController.CheckNumericField;
@@ -79,6 +80,7 @@ public class UpdateController {
                 information.login = login;
                 information.pass = password;
                 information.isUpdate=true;
+                information.locale= Main.bundle.getLocale();
                 client.run(information);
             } catch (Exception er) {
                 er.printStackTrace();
