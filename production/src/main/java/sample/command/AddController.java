@@ -4,18 +4,11 @@ import GeneralTools.Information;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 import sample.Main;
-import sample.tools.ErorAlert;
-
-import java.io.IOException;
+import sample.tools.ErrorAlert;
 
 import static sample.SendCommand.*;
 
@@ -80,11 +73,12 @@ public class AddController {
                 information.cmdtype = "add";
                 information.login = login;
                 information.pass = password;
-                information.isUpdate=true;
-                information.locale=Main.bundle.getLocale();
-                client.run(information);
+                information.isUpdate = true;
+                information.locale = Main.bundle.getLocale();
+                if (CheckNull(information)) client.run(information);
+                else ErrorAlert.alert(Main.bundle.getString("error_field"));
             } catch (Exception er) {
-                ErorAlert.alert(Main.bundle.getString("error_field"));
+                ErrorAlert.alert(Main.bundle.getString("error_field"));
             }
 
         });
@@ -96,9 +90,15 @@ public class AddController {
         } catch (Exception e) {
 
             value = value.replace(",", ".");
-            float FloatValue = Float.parseFloat(value);
-
+                float FloatValue = Float.parseFloat(value);
         }
+    }
+
+    public static boolean CheckNull(Information information) {
+        if (information.name.isEmpty() || information.count.isEmpty() || information.exp.isEmpty() || information.semestr.isEmpty() ||
+                information.form.isEmpty() || information.groupAdmin.isEmpty() || information.height.isEmpty() || information.weight.isEmpty() || information.eyeColor.isEmpty() ||
+                information.X.isEmpty() || information.Y.isEmpty()) return false;
+        return true;
     }
 }
 

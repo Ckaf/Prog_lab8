@@ -1,6 +1,9 @@
 package Filling;
 
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
+import java.util.Locale;
 import java.util.Queue;
 
 /**
@@ -8,7 +11,7 @@ import java.util.Queue;
  */
 
 public class StudyGroup {
-    Integer id=0; //Поле не может быть null, Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
+    Integer id = 0; //Поле не может быть null, Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
     private String name;//Поле не может быть null, Строка не может быть пустой
     private Coordinates coordinates;//Поле не может быть null
     private ZonedDateTime creationDate;//Поле не может быть null, Значение этого поля должно генерироваться автоматически
@@ -20,12 +23,14 @@ public class StudyGroup {
     private String exp;
     private String Color;
     private String User;
-    public StudyGroup(Queue<StudyGroup> StudyGroupPriorityQueue, String name, String count, String exp, String form, String semestr, String groupAdmin, String height, String weight, String eyeColor, String X, String Y,String User,String Color) throws Exception {
+
+    public StudyGroup(Queue<StudyGroup> StudyGroupPriorityQueue, String name, String count, String exp, String form, String semestr, String groupAdmin, String height, String weight, String eyeColor, String X, String Y, String User, String Color) throws Exception {
         //creationDate=creationDate.minusDays(0);
         creationDate=ZonedDateTime.now();
+
 //        Iterator<Filling.StudyGroup> it = StudyGroupPriorityQueue.iterator();
         this.name = name.trim();
-        if (this.name == null | this.name.equalsIgnoreCase("") ) {
+        if (this.name == null | this.name.equalsIgnoreCase("")) {
             System.out.println("Ошибка в заполнении данных, программа прерывает работу");
             System.exit(0);
         }
@@ -37,47 +42,53 @@ public class StudyGroup {
         }
 
         this.exp = exp;
-        if (this.exp == null ) {
+        if (this.exp == null) {
             System.out.println("Ошибка в заполнении данных, программа прерывает работу");
             System.exit(0);
         }
         if (exp.equals("yes") == true) {
             this.exp = "отчислен";
-            expelledStudents=1L;
+            expelledStudents = 1L;
         } else {
             this.exp = "не отчислен";
-            expelledStudents=2L;
+            expelledStudents = 2L;
         }
-        form=form.trim();
-        if (form.equalsIgnoreCase("full time") == true || form.equals("FULL_TIME_EDUCATION") == true) this.formOfEducation = Enum.FormOfEducation.FULL_TIME_EDUCATION;
-        else
-        if (form.equalsIgnoreCase("distance") == true|| form.equals("DISTANCE_EDUCATION") == true) this.formOfEducation = Enum.FormOfEducation.DISTANCE_EDUCATION;
-        else
-        if (form.equalsIgnoreCase("evening") == true|| form.equals("EVENING_CLASSES") == true) this.formOfEducation = Enum.FormOfEducation.EVENING_CLASSES;
-        else  {
+        form = form.trim();
+        if (form.equalsIgnoreCase("full time") == true || form.equals("FULL_TIME_EDUCATION") == true)
+            this.formOfEducation = Enum.FormOfEducation.FULL_TIME_EDUCATION;
+        else if (form.equalsIgnoreCase("distance") == true || form.equals("DISTANCE_EDUCATION") == true)
+            this.formOfEducation = Enum.FormOfEducation.DISTANCE_EDUCATION;
+        else if (form.equalsIgnoreCase("evening") == true || form.equals("EVENING_CLASSES") == true)
+            this.formOfEducation = Enum.FormOfEducation.EVENING_CLASSES;
+        else {
             System.out.println("Ошибка в заполнении данных, программа прерывает работу");
             System.exit(0);
         }
-        semestr=semestr.trim();
-        if (semestr.equals("FIFTH") == true || semestr.equals("5") == true ) this.semesterEnum = Enum.Semester.FIFTH;
-        else
-        if (semestr.equals("6") == true||semestr.equals("SIXTH") == true) this.semesterEnum = Enum.Semester.SIXTH;
-        else
-        if (semestr.equals("7") == true||semestr.equals("SEVENTH") == true) this.semesterEnum = Enum.Semester.SEVENTH;
-        else
-        if (semestr.equals("8") == true||semestr.equals("EIGHTH") == true) this.semesterEnum = Enum.Semester.EIGHTH;
-        else  {
+        semestr = semestr.trim();
+        if (semestr.equals("FIFTH") == true || semestr.equals("5") == true) this.semesterEnum = Enum.Semester.FIFTH;
+        else if (semestr.equals("6") == true || semestr.equals("SIXTH") == true)
+            this.semesterEnum = Enum.Semester.SIXTH;
+        else if (semestr.equals("7") == true || semestr.equals("SEVENTH") == true)
+            this.semesterEnum = Enum.Semester.SEVENTH;
+        else if (semestr.equals("8") == true || semestr.equals("EIGHTH") == true)
+            this.semesterEnum = Enum.Semester.EIGHTH;
+        else {
             System.out.println("Ошибка в заполнении данных, программа прерывает работу");
             System.exit(0);
         }
-        this.User=User;
-        this.Color=Color;
+        this.User = User;
+        this.Color = Color;
         this.groupAdmin = new Person(groupAdmin, height, weight, eyeColor);
         this.coordinates = new Coordinates(X, Y);
     }
 
-public Person getGroupAdmin(){return groupAdmin;}
-public Coordinates getCoordinates(){return coordinates;}
+    public Person getGroupAdmin() {
+        return groupAdmin;
+    }
+
+    public Coordinates getCoordinates() {
+        return coordinates;
+    }
 
     public String getName() {
         return name;
@@ -145,9 +156,13 @@ public Coordinates getCoordinates(){return coordinates;}
         return coordinates.getY();
     }
 
-    public String getUser(){return User;}
+    public String getUser() {
+        return User;
+    }
 
-    public String getUserColor(){return Color;}
+    public String getUserColor() {
+        return Color;
+    }
 
     public void setSemesterEnum(String semestr) {
         if (semestr.equals("5") == true) this.semesterEnum = Enum.Semester.FIFTH;
@@ -159,10 +174,13 @@ public Coordinates getCoordinates(){return coordinates;}
     public Enum.Semester getSemesterEnum() {
         return semesterEnum;
     }
-    public ZonedDateTime getCreationDate(){
-        return creationDate;
+
+    public String getCreationDate(Locale locale) {
+        DateTimeFormatter dtf = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM).withLocale(locale);
+        return dtf.format(creationDate);
     }
-    public Long getExpelledStudents(){
+
+    public Long getExpelledStudents() {
         return expelledStudents;
     }
 

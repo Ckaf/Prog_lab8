@@ -5,6 +5,9 @@ import GeneralTools.Information;
 import GeneralTools.SerializationManager;
 import javafx.scene.control.TableView;
 import javafx.scene.shape.Rectangle;
+import sample.Main;
+import sample.SendCommand;
+import sample.tools.ErrorAlert;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -24,6 +27,8 @@ public class Client {
     static SocketAddress address;
     static DatagramChannel channel;
     static int flag;
+    public static boolean reconnection_flag=false;
+
     public Client() {
         buffer = ByteBuffer.allocate(BUFFER_SIZE);
         buffer.clear();
@@ -36,11 +41,12 @@ public class Client {
             channel.configureBlocking(false);
             channel.connect(address);
         } catch (IOException e) {
-            System.out.println("Ошибка подключения");
+            ErrorAlert.alert(Main.bundle.getString("connection_error"));
+            reconnection_flag=true;
         }
     }
 
-//Адский говнокод, не бейте
+    //Адский говнокод, не бейте
     public static void run(Information information, TableView<Students> table) {
         try {
             byte[] commandInBytes = commandSerializationManager.writeObject(information);
@@ -49,7 +55,6 @@ public class Client {
             buffer.clear();
 
             byte[] answerInBytes = new byte[BUFFER_SIZE];
-            //System.out.println("Запрос отправлен на сервер...");
             buffer = ByteBuffer.wrap(answerInBytes);
             address = null;
             do {
@@ -58,8 +63,9 @@ public class Client {
                     try {
                         address = channel.receive(buffer);
                     } catch (PortUnreachableException e) {
-                        System.out.println("Сервер недоступен");
-                        System.exit(0);
+                        ErrorAlert.alert(Main.bundle.getString("server_error"));
+                        reconnection_flag=true;
+                        return;
                     }
 
                 } catch (IOException e) {
@@ -69,29 +75,26 @@ public class Client {
             Answer result = new Answer();
             result = responseSerializationManager.readObject(answerInBytes);
             try {
-                if (result.autorizatonflag.equals("fail")){
-                    System.out.println(result.getAnswer());
+                if (result.autorizatonflag.equals("fail")) {
+                    ErrorAlert.alert(result.getAnswer());
                     System.exit(0);
                 }
+            } catch (NullPointerException e) {
             }
-            catch (NullPointerException e){}
+            try {
             if (result.wrong == -1) flag = 1;
             else {
                 if (result.wrong != 2) {
-                    //System.out.println("Получен ответ от сервера: ");
-                    CheckCmd(result,table);
-                    //todo
-                    //System.out.print(result.getAnswer());
-                    //System.out.println();
+                    CheckCmd(result, table);
                     buffer.clear();
                 } else {
-                    System.out.println(result.answer);
+                    ErrorAlert.alert(result.answer);
                 }
-            }
+            }}
+            catch (NullPointerException e){}
             try {
                 if (result.getWrong() == 1) System.exit(0);
             } catch (NullPointerException e) {
-                e.printStackTrace();
             }
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
@@ -102,11 +105,13 @@ public class Client {
         try {
             byte[] commandInBytes = commandSerializationManager.writeObject(information);
             buffer = ByteBuffer.wrap(commandInBytes);
-            channel.send(buffer, address);
+            try {
+                channel.send(buffer, address);
+            }
+            catch (NullPointerException e){return;}
             buffer.clear();
 
             byte[] answerInBytes = new byte[BUFFER_SIZE];
-            //System.out.println("Запрос отправлен на сервер...");
             buffer = ByteBuffer.wrap(answerInBytes);
             address = null;
             do {
@@ -115,8 +120,9 @@ public class Client {
                     try {
                         address = channel.receive(buffer);
                     } catch (PortUnreachableException e) {
-                        System.out.println("Сервер недоступен");
-                        System.exit(0);
+                        ErrorAlert.alert(Main.bundle.getString("server_error"));
+                        reconnection_flag=true;
+                        return;
                     }
 
                 } catch (IOException e) {
@@ -126,23 +132,19 @@ public class Client {
             Answer result = new Answer();
             result = responseSerializationManager.readObject(answerInBytes);
             try {
-                if (result.autorizatonflag.equals("fail")){
-                    System.out.println(result.getAnswer());
+                if (result.autorizatonflag.equals("fail")) {
+                    ErrorAlert.alert(result.getAnswer());
                     System.exit(0);
                 }
+            } catch (NullPointerException e) {
             }
-            catch (NullPointerException e){}
             if (result.wrong == -1) flag = 1;
             else {
                 if (result.wrong != 2) {
-                    //System.out.println("Получен ответ от сервера: ");
                     AnswerHandling.CheckCmd(result);
-                    //todo
-                    //System.out.print(result.getAnswer());
-                    //System.out.println();
                     buffer.clear();
                 } else {
-                    System.out.println(result.answer);
+                    ErrorAlert.alert(result.answer);
                 }
             }
             try {
@@ -159,11 +161,15 @@ public class Client {
         try {
             byte[] commandInBytes = commandSerializationManager.writeObject(information);
             buffer = ByteBuffer.wrap(commandInBytes);
+            if (address!=null)
             channel.send(buffer, address);
+            else {
+                connect(Main.host,Main.port);
+                return;
+            }
             buffer.clear();
 
             byte[] answerInBytes = new byte[BUFFER_SIZE];
-            //System.out.println("Запрос отправлен на сервер...");
             buffer = ByteBuffer.wrap(answerInBytes);
             address = null;
             do {
@@ -172,8 +178,9 @@ public class Client {
                     try {
                         address = channel.receive(buffer);
                     } catch (PortUnreachableException e) {
-                        System.out.println("Сервер недоступен");
-                        System.exit(0);
+                        ErrorAlert.alert(Main.bundle.getString("server_error"));
+                        reconnection_flag=true;
+                        return;
                     }
 
                 } catch (IOException e) {
@@ -183,16 +190,16 @@ public class Client {
             Answer result = new Answer();
             result = responseSerializationManager.readObject(answerInBytes);
             try {
-                if (result.autorizatonflag.equals("fail")){
-                    System.out.println(result.getAnswer());
+                if (result.autorizatonflag.equals("fail")) {
+                    ErrorAlert.alert(result.getAnswer());
                     System.exit(0);
                 }
+            } catch (NullPointerException e) {
             }
-            catch (NullPointerException e){}
             if (result.wrong == -1) flag = 1;
             else {
                 if (result.wrong != 2) {
-                    CheckCmd(result,ColorRect);
+                    CheckCmd(result, ColorRect);
                     buffer.clear();
                 } else {
                     System.out.println(result.answer);

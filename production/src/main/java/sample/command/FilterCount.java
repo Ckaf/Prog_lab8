@@ -6,7 +6,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import sample.Main;
-import sample.tools.ErorAlert;
+import sample.tools.ErrorAlert;
 
 import static sample.SendCommand.*;
 import static sample.command.AddController.CheckNumericField;
@@ -36,7 +36,7 @@ public class FilterCount {
             client.run(information);
         }
         catch (Exception e){
-            ErorAlert.alert("Неправильно заполнено поле");
+            ErrorAlert.alert("Неправильно заполнено поле");
         }
         });
     }

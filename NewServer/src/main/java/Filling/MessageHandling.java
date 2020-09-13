@@ -9,13 +9,12 @@ import java.io.IOException;
 import java.net.SocketAddress;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.PriorityQueue;
-import java.util.Queue;
+import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.logging.Level;
+
+import static Filling.AllCmd.getBundle;
 
 /**
  * A class that processes incoming commands
@@ -133,13 +132,14 @@ public class MessageHandling {
         }
         if (information.cmdtype.equalsIgnoreCase("connect")) {
             AllCmd.answerr.wrong = 0;
+            ResourceBundle bundle=getBundle(information.locale);
             try {
                 if (AllCmd.answerr.autorizatonflag.equals("regOk"))
                     AllCmd.answerr.answer = "Пользователь зарегестрирован";
                 if (AllCmd.answerr.autorizatonflag.equals("autOk"))
                     AllCmd.answerr.answer = "Пользователь авторизован";
                 if (AllCmd.answerr.autorizatonflag.equals("fail"))
-                    AllCmd.answerr.answer = "Ошибка авторизации";
+                    AllCmd.answerr.answer = bundle.getString("authorization_error");
             } catch (NullPointerException e) {
             }
         }

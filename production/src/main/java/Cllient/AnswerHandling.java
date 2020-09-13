@@ -3,6 +3,7 @@ package Cllient;
 import GeneralTools.Answer;
 import javafx.scene.control.TableView;
 import javafx.scene.shape.Rectangle;
+import sample.Main;
 import sample.WorkController;
 import sample.tools.MessageAlert;
 
@@ -11,11 +12,11 @@ public class AnswerHandling {
     public static void CheckCmd(Answer answer) {
         String cmd = answer.cmd;
         try {
+
             if (cmd.equalsIgnoreCase("help")) {
                 MessageAlert.showMessage(answer.answer);
             }
             if (cmd.equalsIgnoreCase("info")) {
-                System.out.println(answer.answer);
                 MessageAlert.showMessage(answer.answer);
             }
 
@@ -32,7 +33,7 @@ public class AnswerHandling {
 
             }
             if (cmd.equalsIgnoreCase("head")) {
-                MessageAlert.showMessage("Верхний элемент таблицы:" + answer.answer);
+                MessageAlert.showMessage(Main.bundle.getString("head_element") + answer.answer);
             }
             if (cmd.equalsIgnoreCase("remove_head")) {
 
@@ -44,10 +45,10 @@ public class AnswerHandling {
 
             }
             if (cmd.equalsIgnoreCase("filter_starts_with_name")) {
-                MessageAlert.showMessage("Полученыне элементы:"+answer.answer);
+                MessageAlert.showMessage(Main.bundle.getString("received_elements")+answer.answer);
             }
             if (cmd.equalsIgnoreCase("filter_greater_than_students_count")) {
-                MessageAlert.showMessage("Полученыне элементы:"+answer.answer);
+                MessageAlert.showMessage(Main.bundle.getString("received_elements")+answer.answer);
             }
         } catch (NullPointerException e) {
         }

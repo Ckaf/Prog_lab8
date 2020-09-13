@@ -24,15 +24,13 @@ public class FilterName {
     void initialize() {
         ShowButton.setOnAction(event -> {
             Information information=new Information();
-            if (name.getText().equals(null)) ShowLabel.setText("Поле не может быть пустым!");
-            else {
                 information.cmdtype = "filter_starts_with_name";
                 information.login = login;
                 information.pass = password;
                 information.name= name.getText();
                 information.locale= Main.bundle.getLocale();
-                client.run(information);
-            }
+                if (information.name.isEmpty())ShowLabel.setText("Поле не может быть пустым!");
+               else client.run(information);
         });
     }
 

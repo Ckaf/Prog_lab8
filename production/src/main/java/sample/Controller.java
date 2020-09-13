@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 
+import Cllient.Client;
 import GeneralTools.UTF8Control;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -17,7 +18,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import sample.tools.ErorAlert;
+import sample.tools.ErrorAlert;
 
 public class Controller {
 
@@ -46,7 +47,6 @@ public class Controller {
     void initialize() throws IOException {
         final ResourceBundle[] bundle = {Main.bundle};
         ObservableList<String> lang = FXCollections.observableArrayList(bundle[0].getString("rus_lang"), bundle[0].getString("rs_lang"), bundle[0].getString("al_lang"), bundle[0].getString("es_lang"));
-        // language.setValue(bundle[0].getString("rus_lang"));
         if (bundle[0].getLocale().toString().equals("ru")) language.setValue(bundle[0].getString("rus_lang"));
         if (bundle[0].getLocale().toString().equals("rs")) language.setValue(bundle[0].getString("rs_lang"));
         if (bundle[0].getLocale().toString().equals("al")) language.setValue(bundle[0].getString("al_lang"));
@@ -66,7 +66,6 @@ public class Controller {
                 bundle[0] = (ResourceBundle.getBundle("locals", Locale.forLanguageTag("ES"), new UTF8Control()));
             }
             Stage mainStage = (Stage) registration.getScene().getWindow();
-            System.out.println(bundle[0].getLocale());
             Main.bundle = bundle[0];
             Parent root = null;
             try {
@@ -83,6 +82,11 @@ public class Controller {
         entrance.setOnAction(event -> {
             if (!pass_field.getText().isEmpty() && !login_field.getText().isEmpty()) {
                 SendCommand.Autorizaton(pass_field.getText(), login_field.getText());
+                if (Client.reconnection_flag==true){
+                    Client.reconnection_flag=false;
+                    Client.connect(Main.host,Main.port);
+                    return;
+                }
                 Stage stage = (Stage) registration.getScene().getWindow();
                 stage.close();
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/visual/work.fxml"), Main.bundle);
@@ -100,11 +104,17 @@ public class Controller {
                 Stage mainStage = (Stage) registration.getScene().getWindow();
                 mainStage.close();
             } else {
-                ErorAlert.alert(bundle[0].getString("error_null"));
+                ErrorAlert.alert(bundle[0].getString("error_null"));
             }
         });
         registration.setOnAction(event -> {
+
             if (!pass_field.getText().isEmpty() && !login_field.getText().isEmpty()) {
+                if (Client.reconnection_flag==true){
+                    Client.reconnection_flag=false;
+                    Client.connect(Main.host,Main.port);
+                    return;
+                }
                 SendCommand.Registration(pass_field.getText(), login_field.getText());
 
                 Stage stage = (Stage) registration.getScene().getWindow();
@@ -122,7 +132,7 @@ public class Controller {
                 stage.setScene(new Scene(root1));
                 stage.show();
             } else {
-                ErorAlert.alert(bundle[0].getString("error_null"));
+                ErrorAlert.alert(bundle[0].getString("error_null"));
             }
         });
 

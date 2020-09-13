@@ -214,7 +214,7 @@ public class Command {
     }
 
     public synchronized static void remove_head(Information information) throws SQLException {
-        PreparedStatement preparedStatement = Connect.connection.prepareStatement("SELECT * FROM mytabl MAX(count )");
+        PreparedStatement preparedStatement = Connect.connection.prepareStatement("SELECT * FROM mytabl WHERE count = (SELECT min(count) FROM mytabl)");
         ResultSet resultSet = preparedStatement.executeQuery();
         resultSet.next();
         Integer id = resultSet.getInt(1);

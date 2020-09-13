@@ -1,5 +1,6 @@
 package sample;
 
+import Cllient.Client;
 import Cllient.Students;
 import GeneralTools.UTF8Control;
 import javafx.collections.FXCollections;
@@ -16,7 +17,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
-import sample.tools.ErorAlert;
+import sample.tools.ErrorAlert;
 
 import java.io.IOException;
 import java.util.LinkedList;
@@ -177,39 +178,51 @@ public class WorkController {
             SendCommand.help();
         });
         info.setOnAction(event -> {
+            CheckConnect();
             SendCommand.info();
         });
         show.setOnAction(event -> {
+            CheckConnect();
             SendCommand.show(table);
         });
         add.setOnAction(event -> {
+            CheckConnect();
             SendCommand.add(table);
         });
         update.setOnAction(event -> {
+            CheckConnect();
             SendCommand.update(table);
         });
         remove_by_id.setOnAction(event -> {
+            CheckConnect();
             SendCommand.remove_by_id(table);
         });
         clear.setOnAction(event -> {
+            CheckConnect();
             SendCommand.clear(table);
         });
         head.setOnAction(event -> {
+            CheckConnect();
             SendCommand.head();
         });
         remove_head.setOnAction(event -> {
+            CheckConnect();
             SendCommand.remove_head(table);
         });
         remove_lower.setOnAction(event -> {
+            CheckConnect();
             SendCommand.remove_lower(table);
         });
         remove_any_by_form_education.setOnAction(event -> {
+            CheckConnect();
             SendCommand.remove_any_by_form_education(table);
         });
         filter_strats_with_name.setOnAction(event -> {
+            CheckConnect();
             SendCommand.filter_strats_with_name(table);
         });
         filter_greater_than_students_count.setOnAction(event -> {
+            CheckConnect();
             SendCommand.filter_greater_than_students_count(table);
         });
         exit.setOnAction(event -> {
@@ -217,8 +230,9 @@ public class WorkController {
         });
         table.setEditable(true);
         EditTable();
-
+       
         execute.setOnAction(event -> {
+            CheckConnect();
             try {
                 SendCommand.execute(new Stage(),table);
             } catch (IOException e) {
@@ -285,56 +299,67 @@ public class WorkController {
         y_column.setCellFactory(TextFieldTableCell.forTableColumn());
 
         name_column.setOnEditCommit(commit -> {
+            CheckConnect();
             Students students=commit.getTableView().getItems().get(commit.getTablePosition().getRow());
             students.setName(commit.getNewValue());
             SendUpdate(students);
         });
         count_column.setOnEditCommit(commit -> {
+            CheckConnect();
             Students students=commit.getTableView().getItems().get(commit.getTablePosition().getRow());
             students.setCount(commit.getNewValue());
             SendUpdate(students);
         });
         exp_column.setOnEditCommit(commit -> {
+            CheckConnect();
             Students students=commit.getTableView().getItems().get(commit.getTablePosition().getRow());
             students.setExp(commit.getNewValue());
             SendUpdate(students);
         });
         form_column.setOnEditCommit(commit -> {
+            CheckConnect();
             Students students=commit.getTableView().getItems().get(commit.getTablePosition().getRow());
             students.setForm(commit.getNewValue());
             SendUpdate(students);
         });
         semester_column.setOnEditCommit(commit -> {
+            CheckConnect();
             Students students=commit.getTableView().getItems().get(commit.getTablePosition().getRow());
             students.setSemester(commit.getNewValue());
             SendUpdate(students);
         });
         admin_name_column.setOnEditCommit(commit -> {
+            CheckConnect();
             Students students=commit.getTableView().getItems().get(commit.getTablePosition().getRow());
             students.setAdmin_name(commit.getNewValue());
             SendUpdate(students);
         });
         height_column.setOnEditCommit(commit -> {
+            CheckConnect();
             Students students=commit.getTableView().getItems().get(commit.getTablePosition().getRow());
             students.setHeight(commit.getNewValue());
             SendUpdate(students);
         });
         weight_column.setOnEditCommit(commit -> {
+            CheckConnect();
             Students students=commit.getTableView().getItems().get(commit.getTablePosition().getRow());
             students.setWeight(commit.getNewValue());
             SendUpdate(students);
         });
         eye_color_column.setOnEditCommit(commit -> {
+            CheckConnect();
             Students students=commit.getTableView().getItems().get(commit.getTablePosition().getRow());
             students.setEyeColor(commit.getNewValue());
             SendUpdate(students);
         });
         x_column.setOnEditCommit(commit -> {
+            CheckConnect();
             Students students=commit.getTableView().getItems().get(commit.getTablePosition().getRow());
             students.setX(commit.getNewValue());
             SendUpdate(students);
         });
         y_column.setOnEditCommit(commit -> {
+            CheckConnect();
             Students students=commit.getTableView().getItems().get(commit.getTablePosition().getRow());
             students.setY(commit.getNewValue());
             SendUpdate(students);
@@ -360,20 +385,20 @@ public class WorkController {
             }
         } catch (Exception er) {
             er.printStackTrace();
-            ErorAlert.alert(Main.bundle.getString("error_field"));
+            ErrorAlert.alert(Main.bundle.getString("error_field"));
         }
         SendCommand.show(table);
     }
     public boolean CheckForm(Students students){
         if (!students.getForm().equals("DISTANCE_EDUCATION")&& !students.getForm().equals("FULL_TIME_EDUCATION")&&!students.getForm().equals("EVENING_CLASSES")) {
-            ErorAlert.alert(Main.bundle.getString("error_field_form"));
+            ErrorAlert.alert(Main.bundle.getString("error_field_form"));
             return false;
         }
         else return true;
     }
     public boolean CheckEyeColor(Students students){
         if (!students.getEyeColor().equals("RED")&&!students.getEyeColor().equals("BLACK")&&!students.getEyeColor().equals("ORANGE")&&!students.getEyeColor().equals("BROWN")){
-            ErorAlert.alert(Main.bundle.getString("error_field_eye"));
+            ErrorAlert.alert(Main.bundle.getString("error_field_eye"));
             return false;
         }
         else return true;
@@ -381,16 +406,23 @@ public class WorkController {
     public boolean CheckSemester(Students students){
         if(!students.getSemester().trim().equals("FIFTH")&& !students.getSemester().trim().equals("SIXTH")&& !students.getSemester().trim().equals("SEVENTH")&& !students.getSemester().trim().equals("EIGHTH")
                 && !students.getSemester().trim().equals("5")&& !students.getSemester().trim().equals("6")&& !students.getSemester().trim().equals("7")&& !students.getSemester().trim().equals("8")){
-            ErorAlert.alert(Main.bundle.getString("error_field_semester"));
+            ErrorAlert.alert(Main.bundle.getString("error_field_semester"));
             return false;
         }
         else return true;
     }
     public boolean CheckExp(Students students){
         if (!students.getExp().equals("yes")&&!students.getExp().equals(Main.bundle.getString("exp_y"))&&!students.getExp().equals(Main.bundle.getString("exp_n"))&&students.getExp().equals("yes")){
-            ErorAlert.alert(Main.bundle.getString("error_field"));
+            ErrorAlert.alert(Main.bundle.getString("error_field"));
             return false;
         }
         else return true;
+    }
+    public static void CheckConnect(){
+        if (Client.reconnection_flag==true){
+            Client.reconnection_flag=false;
+            Client.connect(Main.host,Main.port);
+            return;
+        }
     }
 }

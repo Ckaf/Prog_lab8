@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import sample.Main;
+import sample.tools.ErrorAlert;
 
 import static sample.SendCommand.*;
 
@@ -30,7 +31,8 @@ public class RemoveForm {
             information.form=form.getValue();
             information.locale= Main.bundle.getLocale();
             information.isUpdate=true;
-            client.run(information);
+           if (information.form.isEmpty()) ErrorAlert.alert(Main.bundle.getString("error_null"));
+               else client.run(information);
         });
     }
 

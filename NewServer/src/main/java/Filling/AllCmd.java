@@ -33,7 +33,8 @@ public class AllCmd {
 
     public static void info(Queue<StudyGroup> StudyGroupPriorityQueue,Information information) throws NullPointerException {
         ResourceBundle bundle=getBundle(information.locale);
-        answer = bundle.getString("info_part1")+ + StudyGroupPriorityQueue.size() + bundle.getString("info_part2") + StudyGroupPriorityQueue.peek().getCreationDate();
+        answer = bundle.getString("info_part1")+ + StudyGroupPriorityQueue.size() + bundle.getString("info_part2") + StudyGroupPriorityQueue.peek().getCreationDate(information.locale);
+
         answerr.setAnswer(answer);
         answerr.cmd="info";
         System.out.println(answer);

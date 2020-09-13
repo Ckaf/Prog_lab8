@@ -8,7 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import sample.Main;
-import sample.tools.ErorAlert;
+import sample.tools.ErrorAlert;
 
 import static sample.command.AddController.CheckNumericField;
 import static sample.SendCommand.*;
@@ -84,7 +84,7 @@ public class UpdateController {
                 client.run(information);
             } catch (Exception er) {
                 er.printStackTrace();
-                ErorAlert.alert("Неправильно заполнены поля");
+                ErrorAlert.alert("Неправильно заполнены поля");
             }
         });
     }

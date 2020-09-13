@@ -3,7 +3,7 @@ package sample.tools;
 import javafx.scene.control.Alert;
 import sample.Main;
 
-public class ErorAlert {
+public class ErrorAlert {
     public static void alert(String string) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(Main.bundle.getString("error"));
