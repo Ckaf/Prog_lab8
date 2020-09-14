@@ -82,6 +82,7 @@ public class UpdateController {
                 information.isUpdate=true;
                 information.locale= Main.bundle.getLocale();
                 client.run(information);
+                information.isUpdate=false;
             } catch (Exception er) {
                 er.printStackTrace();
                 ErrorAlert.alert("Неправильно заполнены поля");

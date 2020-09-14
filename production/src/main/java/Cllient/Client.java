@@ -27,7 +27,8 @@ public class Client {
     static SocketAddress address;
     static DatagramChannel channel;
     static int flag;
-    public static boolean reconnection_flag=false;
+    public static boolean reconnection_flag = false;
+    public static boolean error_autorization_flag = false;
 
     public Client() {
         buffer = ByteBuffer.allocate(BUFFER_SIZE);
@@ -42,7 +43,7 @@ public class Client {
             channel.connect(address);
         } catch (IOException e) {
             ErrorAlert.alert(Main.bundle.getString("connection_error"));
-            reconnection_flag=true;
+            reconnection_flag = true;
         }
     }
 
@@ -64,7 +65,7 @@ public class Client {
                         address = channel.receive(buffer);
                     } catch (PortUnreachableException e) {
                         ErrorAlert.alert(Main.bundle.getString("server_error"));
-                        reconnection_flag=true;
+                        reconnection_flag = true;
                         return;
                     }
 
@@ -77,25 +78,30 @@ public class Client {
             try {
                 if (result.autorizatonflag.equals("fail")) {
                     ErrorAlert.alert(result.getAnswer());
-                    System.exit(0);
+                    error_autorization_flag = true;
+                    return;
+//                    System.exit(0);
                 }
             } catch (NullPointerException e) {
             }
             try {
-            if (result.wrong == -1) flag = 1;
-            else {
-                if (result.wrong != 2) {
-                    CheckCmd(result, table);
-                    buffer.clear();
-                } else {
-                    ErrorAlert.alert(result.answer);
+                if (result.wrong == -1) flag = 1;
+                else {
+                    if (result.wrong != 2) {
+                        CheckCmd(result, table);
+                        buffer.clear();
+                    } else {
+                        ErrorAlert.alert(result.answer);
+                        return;
+                    }
                 }
-            }}
-            catch (NullPointerException e){}
-            try {
-                if (result.getWrong() == 1) System.exit(0);
             } catch (NullPointerException e) {
+                error_autorization_flag = true;
             }
+//            try {
+//                if (result.getWrong() == 1) System.exit(0);
+//            } catch (NullPointerException e) {
+//            }
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -107,8 +113,9 @@ public class Client {
             buffer = ByteBuffer.wrap(commandInBytes);
             try {
                 channel.send(buffer, address);
+            } catch (NullPointerException e) {
+                return;
             }
-            catch (NullPointerException e){return;}
             buffer.clear();
 
             byte[] answerInBytes = new byte[BUFFER_SIZE];
@@ -121,7 +128,7 @@ public class Client {
                         address = channel.receive(buffer);
                     } catch (PortUnreachableException e) {
                         ErrorAlert.alert(Main.bundle.getString("server_error"));
-                        reconnection_flag=true;
+                        reconnection_flag = true;
                         return;
                     }
 
@@ -131,20 +138,26 @@ public class Client {
             } while (address == null);
             Answer result = new Answer();
             result = responseSerializationManager.readObject(answerInBytes);
+//            System.out.println(result.autorizatonflag);
             try {
                 if (result.autorizatonflag.equals("fail")) {
                     ErrorAlert.alert(result.getAnswer());
-                    System.exit(0);
+                    error_autorization_flag = true;
+                    return;
                 }
             } catch (NullPointerException e) {
+                error_autorization_flag = true;
+                return;
             }
             if (result.wrong == -1) flag = 1;
             else {
+//                System.out.println(result.wrong);
                 if (result.wrong != 2) {
                     AnswerHandling.CheckCmd(result);
                     buffer.clear();
                 } else {
                     ErrorAlert.alert(result.answer);
+                    return;
                 }
             }
             try {
@@ -161,10 +174,10 @@ public class Client {
         try {
             byte[] commandInBytes = commandSerializationManager.writeObject(information);
             buffer = ByteBuffer.wrap(commandInBytes);
-            if (address!=null)
-            channel.send(buffer, address);
+            if (address != null)
+                channel.send(buffer, address);
             else {
-                connect(Main.host,Main.port);
+                connect(Main.host, Main.port);
                 return;
             }
             buffer.clear();
@@ -179,7 +192,7 @@ public class Client {
                         address = channel.receive(buffer);
                     } catch (PortUnreachableException e) {
                         ErrorAlert.alert(Main.bundle.getString("server_error"));
-                        reconnection_flag=true;
+                        reconnection_flag = true;
                         return;
                     }
 
@@ -191,23 +204,28 @@ public class Client {
             result = responseSerializationManager.readObject(answerInBytes);
             try {
                 if (result.autorizatonflag.equals("fail")) {
-                    ErrorAlert.alert(result.getAnswer());
-                    System.exit(0);
+//                    ErrorAlert.alert(result.getAnswer());
+                    error_autorization_flag = true;
+                    return;
+//                    System.exit(0);
                 }
             } catch (NullPointerException e) {
+                error_autorization_flag = true;
             }
             if (result.wrong == -1) flag = 1;
             else {
                 if (result.wrong != 2) {
                     CheckCmd(result, ColorRect);
                     buffer.clear();
+
                 } else {
-                    System.out.println(result.answer);
+//                    System.out.println(result.answer);
                 }
             }
             try {
                 if (result.getWrong() == 1) System.exit(0);
             } catch (NullPointerException e) {
+                error_autorization_flag = true;
                 e.printStackTrace();
             }
         } catch (IOException | ClassNotFoundException e) {

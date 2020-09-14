@@ -33,6 +33,7 @@ public class Remove_lower {
                 information.locale= Main.bundle.getLocale();
                 information.isUpdate=true;
                 client.run(information);
+                information.isUpdate=false;
             }
             catch (Exception e){
                 RemoveLabel.setText("Неправильно заполнено поле");

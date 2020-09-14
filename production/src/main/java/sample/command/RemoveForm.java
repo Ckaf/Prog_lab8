@@ -33,6 +33,7 @@ public class RemoveForm {
             information.isUpdate=true;
            if (information.form.isEmpty()) ErrorAlert.alert(Main.bundle.getString("error_null"));
                else client.run(information);
+            information.isUpdate=false;
         });
     }
 

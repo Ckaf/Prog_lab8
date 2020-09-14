@@ -87,6 +87,10 @@ public class Controller {
                     Client.connect(Main.host,Main.port);
                     return;
                 }
+                if (Client.error_autorization_flag==true){
+                    Client.error_autorization_flag=false;
+                    return;
+                }
                 Stage stage = (Stage) registration.getScene().getWindow();
                 stage.close();
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/visual/work.fxml"), Main.bundle);
@@ -108,18 +112,20 @@ public class Controller {
             }
         });
         registration.setOnAction(event -> {
-
             if (!pass_field.getText().isEmpty() && !login_field.getText().isEmpty()) {
+                SendCommand.Registration(pass_field.getText(), login_field.getText());
                 if (Client.reconnection_flag==true){
                     Client.reconnection_flag=false;
                     Client.connect(Main.host,Main.port);
                     return;
                 }
-                SendCommand.Registration(pass_field.getText(), login_field.getText());
-
+                if (Client.error_autorization_flag==true){
+                    Client.error_autorization_flag=false;
+                    return;
+                }
                 Stage stage = (Stage) registration.getScene().getWindow();
                 stage.close();
-                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/visual/work.fxml"));
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/visual/work.fxml"),Main.bundle);
                 Parent root1 = null;
                 try {
                     root1 = (Parent) fxmlLoader.load();

@@ -117,6 +117,7 @@ public class SendCommand {
         information.isUpdate=true;
         information.locale=Main.bundle.getLocale();
         client.run(information);
+        information.isUpdate=false;
     }
 
     public static void remove_lower(TableView<Students> table) {

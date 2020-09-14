@@ -35,6 +35,7 @@ public class Remove {
                information.isUpdate=true;
                information.locale= Main.bundle.getLocale();
                client.run(information);
+               information.isUpdate=false;
            }
            catch (Exception e){
                RemoveLabel.setText("Неправильно заполнено поле");

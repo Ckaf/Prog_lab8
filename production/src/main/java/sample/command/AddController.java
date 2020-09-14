@@ -77,6 +77,7 @@ public class AddController {
                 information.locale = Main.bundle.getLocale();
                 if (CheckNull(information)) client.run(information);
                 else ErrorAlert.alert(Main.bundle.getString("error_field"));
+                information.isUpdate=false;
             } catch (Exception er) {
                 ErrorAlert.alert(Main.bundle.getString("error_field"));
             }

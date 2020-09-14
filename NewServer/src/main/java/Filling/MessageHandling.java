@@ -42,7 +42,7 @@ public class MessageHandling {
             user.login = information.login;
             user.number = socketAddress;
             user.UpdateAddress = information.address;
-            if (Command.isExistingUser(information.login, information.pass).equals("NOTHING") && information.regtype.equalsIgnoreCase("reg")) {
+            if (Command.isExistingLogin(information.login)==false && information.regtype.equalsIgnoreCase("reg")) {
                 Logger.login(Level.INFO, "Зарегестрировался пользователь с логином: " + information.login);
                 Command.registrationUser(information.login, information.pass);
                 AllCmd.answerr.autorizatonflag = "regOk";
@@ -58,10 +58,29 @@ public class MessageHandling {
                 } else AllCmd.answerr.autorizatonflag = "fail";
             } else AllCmd.answerr.autorizatonflag = "fail";
 
-        } else
+        } else {
+            User user = new User();
+            user.login = information.login;
+            user.number = socketAddress;
+            user.UpdateAddress = information.address;
             Logger.login(Level.INFO, "Пришел запрос от клиента с адресом: " + socketAddress);
+            if (Command.isExistingLogin(information.login)==false && information.regtype.equalsIgnoreCase("reg")) {
+                Logger.login(Level.INFO, "Зарегестрировался пользователь с логином: " + information.login);
+                Command.registrationUser(information.login, information.pass);
+                AllCmd.answerr.autorizatonflag = "regOk";
+                UserList.add(user);
+            } else if (information.regtype.equalsIgnoreCase("aut")) {
+                if (!Command.isExistingUser(information.login, information.pass).equals("NOTHING")) {
+                    Logger.login(Level.INFO, "Авторизировался пользователь с логином: " + information.login);
+                    AllCmd.answerr.autorizatonflag = "autOk";
+                    UserList.add(user);
+                    UserList.stream().forEach(user1 -> {
+                        if (user1.login.equals(user.login)) user.UserColor = user1.UserColor;
+                    });
+                } else AllCmd.answerr.autorizatonflag = "fail";
+            }
+        }
     }
-
     public synchronized static void Handling(byte[] buffer, SocketAddress socketAddress) throws Exception {
         Thread.sleep(10);
         Information information = serializationManager.readObject(buffer);
